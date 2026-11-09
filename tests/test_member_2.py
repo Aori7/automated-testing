@@ -123,3 +123,79 @@ def test_add_two_tasks(page: Page):
     expect(task_items.locator("label")).to_have_text(
         ["Read the instructions", "Practise the examples"]
     )
+
+
+def test_edit_existing_task(page: Page):
+    page.goto(URL)
+
+    task_input = page.get_by_placeholder(
+        "What needs to be done?",
+        exact=True
+    )
+
+    task_input.fill("Read a book")
+    task_input.press("Enter")
+
+    task_items = page.locator(".todo-list li")
+    expect(task_items).to_have_count(1)
+
+    # Double-click to edit the task
+    task_items.first.locator("label").dblclick()
+
+    # Replace the existing text
+    edit_input = task_items.first.locator("input.edit")
+    edit_input.fill("Read two books")
+    edit_input.press("Enter")
+
+    # Check that the task name changed
+    expect(task_items.locator("label")).to_have_text(
+        ["Read two books"]
+    )
+
+    expect(task_items.locator("label")).not_to_have_text(
+        ["Read a book"]
+    )
+
+    # Capture screenshot
+    page.screenshot(
+        path="docs/evidence/member-2/extra-test-1-edit-task.png",
+        full_page=True
+    )
+
+
+def test_tasks_persist_after_refresh(page: Page):
+    page.goto(URL)
+
+    task_input = page.get_by_placeholder(
+        "What needs to be done?",
+        exact=True
+    )
+
+    # Add two tasks
+    task_input.fill("Complete homework")
+    task_input.press("Enter")
+
+    task_input.fill("Review notes")
+    task_input.press("Enter")
+
+    task_items = page.locator(".todo-list li")
+
+    expect(task_items).to_have_count(2)
+
+    # Refresh the website
+    page.reload()
+
+    # Check that both tasks still exist
+    task_items = page.locator(".todo-list li")
+
+    expect(task_items).to_have_count(2)
+    expect(task_items.locator("label")).to_have_text([
+        "Complete homework",
+        "Review notes"
+    ])
+
+    # Capture screenshot
+    page.screenshot(
+        path="docs/evidence/member-2/extra-test-2-refresh-tasks.png",
+        full_page=True
+    )

@@ -9,7 +9,7 @@ Cosmetic changes to copied code are not sufficient.
 | Member | First additional scenario | Second additional scenario | Evidence folder |
 | --- | --- | --- | --- |
 | 1 | | | `docs/evidence/member-1/` |
-| 2 | | | `docs/evidence/member-2/` |
+| 2 | Edit an existing task | Refresh after adding tasks | `docs/evidence/member-2/` |
 | 3 | | | `docs/evidence/member-3/` |
 | 4 | | | `docs/evidence/member-4/` |
 
