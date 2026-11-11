@@ -122,3 +122,43 @@ def test_add_two_tasks(page: Page):
     expect(task_items.locator("label")).to_have_text(
         ["Read the instructions", "Practise the examples"]
     )
+
+def test_delete_active_task_keeps_other_task(page: Page):
+    page.goto(URL)
+    task_items = page.locator(".todo-list li")
+
+    add_task(page, "Read a chapter")
+    add_task(page, "Write a summary")
+    expect(task_items).to_have_count(2)
+
+    task_to_delete = task_items.filter(has_text="Read a chapter")
+    task_to_delete.hover()
+    task_to_delete.locator(".destroy").click()
+
+    expect(task_items).to_have_count(1)
+    expect(task_items.locator("label")).to_have_text(["Write a summary"])
+
+    page.screenshot(
+        path="docs/evidence/member-4/extra-test-1-delete-task.png",
+        full_page=True,
+    )
+
+def test_mark_all_complete(page: Page):
+    page.goto(URL)
+    task_items = page.locator(".todo-list li")
+
+    add_task(page, "Read a chapter")
+    add_task(page, "Write a summary")
+    add_task(page, "Review my notes")
+    expect(task_items).to_have_count(3)
+
+    page.get_by_label("Mark all as complete").check()
+
+    expect(task_items).to_have_class(["completed", "completed", "completed"])
+    for index in range(3):
+        expect(task_items.nth(index).get_by_role("checkbox")).to_be_checked()
+
+    page.screenshot(
+        path="docs/evidence/member-4/extra-test-2-mark-all-complete.png",
+        full_page=True,
+    )
