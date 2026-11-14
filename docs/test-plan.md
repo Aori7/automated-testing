@@ -10,7 +10,7 @@ Cosmetic changes to copied code are not sufficient.
 | --- | --- | --- | --- |
 | 1 | Completed filter with mixed tasks | Reopen a completed task | `docs/evidence/member-1/` |
 | 2 | Edit an existing task | Refresh after adding tasks | `docs/evidence/member-2/` |
-| 3 | | | `docs/evidence/member-3/` |
+| 3 | Active filter with mixed tasks | Clear completed from a mixed list | `docs/evidence/member-3/` |
 | 4 | Delete an active task | mark all tasks complete | `docs/evidence/member-4/` |
 
 ## Unavoidable repeated scenarios, if any
