@@ -123,3 +123,73 @@ def test_add_two_tasks(page: Page):
     expect(task_items.locator("label")).to_have_text(
         ["Read the instructions", "Practise the examples"]
     )
+
+
+def test_completed_filter_with_mixed_tasks(page: Page):
+    page.goto(URL)
+
+    task_items = page.locator(".todo-list li")
+
+    # Start with an empty task list
+    expect(task_items).to_have_count(0)
+
+    # Add two tasks
+    add_task(page, "Read a chapter")
+    add_task(page, "Write a summary")
+
+    expect(task_items).to_have_count(2)
+
+    # Mark only the first task as completed
+    task_items.first.get_by_role("checkbox").check()
+
+    # Select the Completed filter
+    page.get_by_role("link", name="Completed", exact=True).click()
+
+    # Only the completed task should appear
+    expect(task_items).to_have_count(1)
+    expect(task_items.locator("label")).to_have_text(
+        ["Read a chapter"]
+    )
+
+    # Capture the final result
+    page.screenshot(
+        path="docs/evidence/member-1/extra-test-1-completed-filter.png",
+        full_page=True,
+    )
+
+
+def test_reopen_completed_task(page: Page):
+    page.goto(URL)
+
+    task_items = page.locator(".todo-list li")
+
+    # Start with an empty task list
+    expect(task_items).to_have_count(0)
+
+    # Add one task
+    add_task(page, "Complete my revision")
+
+    expect(task_items).to_have_count(1)
+
+    # Mark the task as completed
+    checkbox = task_items.first.get_by_role("checkbox")
+    checkbox.check()
+    expect(checkbox).to_be_checked()
+
+    # Reopen the completed task
+    checkbox.uncheck()
+
+    # Verify the task is active again
+    expect(checkbox).not_to_be_checked()
+    expect(task_items.first).not_to_have_class(
+        "completed"
+    )
+    expect(task_items.locator("label")).to_have_text(
+        ["Complete my revision"]
+    )
+
+    # Capture the final result
+    page.screenshot(
+        path="docs/evidence/member-1/extra-test-2-reopen-task.png",
+        full_page=True,
+    )

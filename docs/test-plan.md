@@ -8,7 +8,7 @@ Cosmetic changes to copied code are not sufficient.
 
 | Member | First additional scenario | Second additional scenario | Evidence folder |
 | --- | --- | --- | --- |
-| 1 | | | `docs/evidence/member-1/` |
+| 1 | Completed filter with mixed tasks | Reopen a completed task | `docs/evidence/member-1/` |
 | 2 | Edit an existing task | Refresh after adding tasks | `docs/evidence/member-2/` |
 | 3 | | | `docs/evidence/member-3/` |
 | 4 | Delete an active task | mark all tasks complete | `docs/evidence/member-4/` |
